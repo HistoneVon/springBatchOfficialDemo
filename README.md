@@ -4,6 +4,7 @@
 >
 > Date: 2023/07/14
 
+* 本文档配套仓库：https://github.com/HistoneVon/springBatchOfficialDemo
 * 本文档基于Spring官方文档：[Getting Started | Creating a Batch Service (spring.io)](https://spring.io/guides/gs/batch-processing/)
 * Spring Batch官方仓库：https://github.com/spring-projects/spring-batch
 * 官方提供的本Demo项目：https://github.com/spring-guides/gs-batch-processing
