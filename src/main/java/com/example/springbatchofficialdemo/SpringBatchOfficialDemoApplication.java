@@ -11,7 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @EnableBatchProcessing
 public class SpringBatchOfficialDemoApplication {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         System.exit(SpringApplication.exit(SpringApplication.run(SpringBatchOfficialDemoApplication.class, args)));
     }
 
