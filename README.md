@@ -116,7 +116,7 @@ public class Person {
 * 中间处理器（Intermediate Processor）
 * 批处理常见流程：**引入数据，转换数据，然后将其传输到其他位置**
 * 本例转换为：**将名字转换为大写**
-* `src/main/java/com/example/springbatchofficialdemo/Person.java`
+* `src/main/java/com/example/springbatchofficialdemo/PersonItemProcessor.java`
 * 官网：The input and output types need not be the same. In fact, after one source of data is read, sometimes the application’s data flow needs a different data type.（输入输出类型不必相同）
 
 ```java
@@ -226,7 +226,7 @@ public class BatchConfiguration {
 
 ![image-20230717134838188](https://histone-obs.obs.cn-southwest-2.myhuaweicloud.com/noteImg/image-20230717134838188.png)
 
-![image-20230717135158659](./Spring Batch学习及Demo项目.assets/image-20230717135158659.png)
+![image-20230717135158659](https://histone-obs.obs.cn-southwest-2.myhuaweicloud.com/noteImg/image-20230717135158659.png)
 
 ![image-20230717134919331](https://histone-obs.obs.cn-southwest-2.myhuaweicloud.com/noteImg/image-20230717134919331.png)
 
@@ -446,4 +446,4 @@ Process finished with exit code 0
 
 * [Getting Started | Creating a Batch Service (spring.io)](https://spring.io/guides/gs/batch-processing/)
 * [Spring Batch 的基本使用 - FatalFlower - 博客园 (cnblogs.com)](https://www.cnblogs.com/FatalFlower/p/15483940.html)
-* [永远不要使用双花括号初始化实例，否则就会OOM！ - 磊哥|www.javacn.site - 博客园 (cnblogs.com)](
+* [永远不要使用双花括号初始化实例，否则就会OOM！ - 磊哥|www.javacn.site - 博客园 (cnblogs.com)](https://www.cnblogs.com/vipstone/p/12937582.html)
