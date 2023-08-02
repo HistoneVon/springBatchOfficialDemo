@@ -1,5 +1,6 @@
 package com.example.springbatchofficialdemo;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.Job;
@@ -19,6 +20,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 
 @EnableBatchProcessing
+@Slf4j
 public class SpringBatchOfficialDemoApplication {
 
     public static void main(String[] args)
@@ -34,7 +36,6 @@ public class SpringBatchOfficialDemoApplication {
         JobLauncher jobLauncher = (JobLauncher) context.getBean("jobLauncher");
         Job job = (Job) context.getBean("simpleFileImportJob");
         JobExecution jobExecution = jobLauncher.run(job, new JobParameters());
-        final Logger log = LoggerFactory.getLogger(SpringBatchOfficialDemoApplication.class);
         if (log.isInfoEnabled()) {
             log.info(String.format("Exit Status : %s", jobExecution.getStatus()));
         }
