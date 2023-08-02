@@ -1,5 +1,8 @@
 package com.example.springbatchofficialdemo;
 
+import com.example.springbatchofficialdemo.entity.Person;
+import com.example.springbatchofficialdemo.listener.JobCompletionNotificationListener;
+import com.example.springbatchofficialdemo.processor.PersonItemProcessor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
@@ -36,7 +39,7 @@ public class BatchConfiguration {
     public FlatFileItemReader<Person> reader() {
         return new FlatFileItemReaderBuilder<Person>()
                 .name("personItemReader")
-                .resource(new ClassPathResource("sample-data.csv")) // 读取数据的来源，这里表示在类路径的resources目录下的sample-data.csv文件
+                .resource(new ClassPathResource("data/sample-data.csv")) // 读取数据的来源，这里表示在类路径的resources目录下的sample-data.csv文件
                 .delimited() // 指定每行的数据字段的分割符为 ,（默认）
                 .names("firstName", "lastName") // 将分割的字段映射到 firstName 和 lastName 属性字段
                 .fieldSetMapper(new BeanWrapperFieldSetMapper<Person>() {{

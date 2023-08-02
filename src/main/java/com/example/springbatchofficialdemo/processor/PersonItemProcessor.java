@@ -1,5 +1,6 @@
-package com.example.springbatchofficialdemo;
+package com.example.springbatchofficialdemo.processor;
 
+import com.example.springbatchofficialdemo.entity.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,11 +20,8 @@ public class PersonItemProcessor implements ItemProcessor<Person, Person> {
     public Person process(final Person person) throws Exception {
         final String firstName = person.getFirstName().toUpperCase();
         final String lastName = person.getLastName().toUpperCase();
-
         final Person transformedPerson = new Person(firstName, lastName);
-
         log.info("Converting (" + person + ") into (" + transformedPerson + ")");
-
         return transformedPerson;
     }
 

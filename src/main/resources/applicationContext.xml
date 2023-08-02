@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:batch="http://www.springframework.org/schema/batch"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                            http://www.springframework.org/schema/beans/spring-beans.xsd
+                            http://www.springframework.org/schema/context
+                            http://www.springframework.org/schema/context/spring-context.xsd
+                            http://www.springframework.org/schema/batch
+                            http://www.springframework.org/schema/batch/spring-batch.xsd
+                            http://www.springframework.org/schema/jdbc
+                            http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
+    <context:annotation-config/>
+    <!-- Component scan to find all Spring components -->
+    <context:component-scan base-package="com.example.springbatchofficialdemo"/>
+    <!-- Data source - connect to a MySQL instance running on the local machine -->
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost/springBatchDemo"/>
+        <property name="username" value="root"/>
+        <property name="password" value="FCL13319179602fcl"/>
+    </bean>
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <!-- Create job-meta tables automatically -->
+    <jdbc:initialize-database data-source="dataSource">
+        <jdbc:script location="org/springframework/batch/core/schema-drop-mysql.sql"/>
+        <jdbc:script location="org/springframework/batch/core/schema-mysql.sql"/>
+    </jdbc:initialize-database>
+    <!-- Job Repository: used to persist the state of the batch job -->
+    <bean id="jobRepository" class="org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean">
+        <property name="transactionManager" ref="transactionManager"/>
+    </bean>
+    <!-- Job Launcher: creates the job and the job state before launching it -->
+    <bean id="jobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+        <property name="jobRepository" ref="jobRepository"/>
+    </bean>
+
+    <!-- Reader bean for our simple CSV example -->
+    <bean id="personItemReader" class="org.springframework.batch.item.file.FlatFileItemReader" scope="step">
+        <!--resource指定要读取的文件-->
+        <property name="resource" value="file:./data/sample-data.csv"/>
+        <!--<property name="resource" value="file:#{jobParameters['inputFile']}"/>-->
+        <!--linesToSkip有多少标题行需要跳过，此处为0行-->
+        <!-- Skip the first line of the file because this is the header that defines the fields -->
+        <property name="linesToSkip" value="0"/>
+        <!--lineMapper负责将一行记录转换为一个对象-->
+        <!-- Defines how we map lines to objects -->
+        <property name="lineMapper">
+            <bean class="org.springframework.batch.item.file.mapping.DefaultLineMapper">
+                <!--lineTokenizer指定如何将一行拆分为多个字段-->
+                <!-- The lineTokenizer divides individual lines up into units of work -->
+                <property name="lineTokenizer">
+                    <bean class="org.springframework.batch.item.file.transform.DelimitedLineTokenizer">
+                        <property name="names" value="lastName,firstName"/>
+                    </bean>
+                </property>
+                <!--fieldSetMapper根据字段值构造一个对象-->
+                <!-- The fieldSetMapper maps a line in the file to a Product object -->
+                <property name="fieldSetMapper">
+                    <bean class="com.example.springbatchofficialdemo.reader.PersonFieldSetMapper"/>
+                </property>
+            </bean>
+        </property>
+    </bean>
+    <!-- Processor Bean -->
+    <bean id="personItemProcessor" class="com.example.springbatchofficialdemo.processor.PersonItemProcessor"/>
+    <!-- Writer Bean -->
+    <bean id="personItemWriter" class="com.example.springbatchofficialdemo.writer.PersonItemWriter"/>
+
+</beans>
