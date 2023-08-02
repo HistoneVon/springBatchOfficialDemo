@@ -17,7 +17,7 @@
     <context:component-scan base-package="com.example.springbatchofficialdemo"/>
     <!-- Data source - connect to a MySQL instance running on the local machine -->
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/> <!-- com.mysql.jdbc.Driver过时 -->
         <property name="url" value="jdbc:mysql://localhost/springBatchDemo"/>
         <property name="username" value="root"/>
         <property name="password" value="FCL13319179602fcl"/>
@@ -45,7 +45,7 @@
     <!-- Reader bean for our simple CSV example -->
     <bean id="personItemReader" class="org.springframework.batch.item.file.FlatFileItemReader" scope="step">
         <!--resource指定要读取的文件-->
-        <property name="resource" value="file:./data/sample-data.csv"/>
+        <property name="resource" value="classpath:/data/sample-data.csv"/>
         <!--<property name="resource" value="file:#{jobParameters['inputFile']}"/>-->
         <!--linesToSkip有多少标题行需要跳过，此处为0行-->
         <!-- Skip the first line of the file because this is the header that defines the fields -->

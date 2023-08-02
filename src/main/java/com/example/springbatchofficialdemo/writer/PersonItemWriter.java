@@ -18,26 +18,33 @@ import java.util.List;
 
 public class PersonItemWriter implements ItemWriter<Person> {
 
-    private static final String GET_PERSON = "select * from PERSON where firstName = ?";
-    private static final String INSERT_PERSON = "insert into PERSON (firstName, lastName) values (?, ?)";
-    private static final String UPDATE_PERSON = "update PERSON set lastName = ? where firstName = ?";
+    /*private static final String GET_PERSON = "select * from person where first_name = ?";*/
+    private static final String INSERT_PERSON = "insert into person (first_name, last_name) values (?, ?)";
+    /*private static final String UPDATE_PERSON = "update person set last_name = ? where first_name = ?";*/
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
     @Override
     public void write(List<? extends Person> persons) throws Exception {
+        for (Person person : persons) {
+            jdbcTemplate.update(INSERT_PERSON, person.getFirstName(), person.getLastName());
+        }
+        /*
         for (Person person : persons) { // 对每个Person对象
             // 根据指定的firstName获取Person
-            List<Person> personList = jdbcTemplate.query(GET_PERSON, new Object[]{person.getFirstName()}, new RowMapper<Person>() {
-                @Override
-                public Person mapRow(ResultSet resultSet, int rowNum) throws SQLException {
-                    Person p = new Person();
-                    p.setFirstName(resultSet.getString(1));
-                    p.setLastName(resultSet.getString(2));
-                    return p;
-                }
-            });
+            List<Person> personList = jdbcTemplate.query(
+                    GET_PERSON,
+                    new Object[]{person.getFirstName()},
+                    new RowMapper<Person>() {
+                        @Override
+                        public Person mapRow(ResultSet resultSet, int rowNum) throws SQLException {
+                            Person p = new Person();
+                            p.setFirstName(resultSet.getString(1));
+                            p.setLastName(resultSet.getString(2));
+                            return p;
+                        }
+                    });
 
             if (!personList.isEmpty()) { // 如果SELECT取得一条记录, 则write()中更新数据库中对应记录的值
                 jdbcTemplate.update(UPDATE_PERSON, person.getLastName(), person.getFirstName());
@@ -45,5 +52,6 @@ public class PersonItemWriter implements ItemWriter<Person> {
                 jdbcTemplate.update(INSERT_PERSON, person.getFirstName(), person.getLastName());
             }
         }
+        */
     }
 }

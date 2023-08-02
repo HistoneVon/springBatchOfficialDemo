@@ -1,8 +1,8 @@
-DROP TABLE people IF EXISTS;
+DROP TABLE IF EXISTS person;
 
-CREATE TABLE people
+CREATE TABLE person
 (
-    person_id  BIGINT IDENTITY NOT NULL PRIMARY KEY,
+    person_id  BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT, /*设置自增*/
     first_name VARCHAR(20),
     last_name  VARCHAR(20)
 );
