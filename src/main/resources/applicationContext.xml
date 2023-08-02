@@ -73,5 +73,8 @@
     <bean id="personItemProcessor" class="com.example.springbatchofficialdemo.processor.PersonItemProcessor"/>
     <!-- Writer Bean -->
     <bean id="personItemWriter" class="com.example.springbatchofficialdemo.writer.PersonItemWriter"/>
+    <!-- Listener Bean -->
+    <bean id="jobCompletionNotificationListener"
+          class="com.example.springbatchofficialdemo.listener.JobCompletionNotificationListener"/>
 
 </beans>

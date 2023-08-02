@@ -7,12 +7,19 @@
                 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
                 http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd">
     <!-- Import our beans -->
-    <import resource="classpath:/applicationContext.xml" />
+    <import resource="classpath:/applicationContext.xml"/>
     <job id="simpleFileImportJob" xmlns="http://www.springframework.org/schema/batch">
         <step id="csv2MysqlStep">
             <tasklet>
-                <chunk reader="personItemReader" processor="personItemProcessor" writer="personItemWriter" commit-interval="3" />
+                <chunk reader="personItemReader"
+                       processor="personItemProcessor"
+                       writer="personItemWriter"
+                       commit-interval="3"/>
+
             </tasklet>
         </step>
+        <listeners>
+            <listener ref="jobCompletionNotificationListener"/>
+        </listeners>
     </job>
 </beans>
